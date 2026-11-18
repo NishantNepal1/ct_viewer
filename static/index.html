@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CT Segmentation Viewer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <aside id="panel">
+    <h1>CT segmentation viewer</h1>
+    <p class="note">Model masks are automatic output to inspect, not a diagnosis.</p>
+    <div id="config-banner" class="banner" hidden></div>
+
+    <section>
+      <h2>Scan</h2>
+      <input type="file" id="file-input" accept=".zip,application/zip">
+      <div id="series-status" class="status"></div>
+      <progress id="volume-progress" max="1" value="0" hidden></progress>
+    </section>
+
+    <section>
+      <h2>Segmentation</h2>
+      <button id="run-button" type="button" disabled>Run segmentation</button>
+      <div id="poll-status" class="status"></div>
+      <ul id="job-list"></ul>
+    </section>
+
+    <section>
+      <h2>Overlays</h2>
+      <div id="structure-toggles"><div class="status">No job selected.</div></div>
+      <label class="toggle">
+        <input type="checkbox" id="reference-toggle" checked>
+        <span class="swatch reference"></span> Reference (outline)
+      </label>
+      <div id="reference-status" class="status"></div>
+      <label class="slider">Fill opacity
+        <input type="range" id="opacity" min="0" max="100" value="45">
+      </label>
+    </section>
+
+    <section>
+      <h2>Dice (model vs reference)</h2>
+      <div id="dice-box"><div class="status">Run segmentation to compute Dice.</div></div>
+    </section>
+
+    <section id="error-area" class="error" hidden>
+      <div id="error-message"></div>
+      <details id="error-details-wrap">
+        <summary>Technical details</summary>
+        <pre id="error-details"></pre>
+      </details>
+      <button id="error-dismiss" type="button">Dismiss</button>
+    </section>
+  </aside>
+
+  <main>
+    <div id="toolbar">
+      <label>Window
+        <select id="preset">
+          <option value="soft">Soft tissue (W400 / L40)</option>
+          <option value="liver">Liver (W150 / L30)</option>
+          <option value="lung">Lung (W1500 / L-600)</option>
+          <option value="bone">Bone (W1800 / L400)</option>
+          <option value="custom" hidden>Custom</option>
+        </select>
+      </label>
+      <span id="window-label"></span>
+      <span id="slice-label"></span>
+    </div>
+    <div id="viewport">
+      <canvas id="view"></canvas>
+      <span class="orient" id="orient-top"></span>
+      <span class="orient" id="orient-bottom"></span>
+      <span class="orient" id="orient-left"></span>
+      <span class="orient" id="orient-right"></span>
+      <div id="placeholder">Open a DICOM zip to start.</div>
+    </div>
+    <input type="range" id="slice-slider" min="0" max="0" value="0" disabled aria-label="Slice">
+    <div id="legend"></div>
+    <p class="hint">Scroll, arrow keys or the slider change slice. Drag on the image to adjust window/level.</p>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

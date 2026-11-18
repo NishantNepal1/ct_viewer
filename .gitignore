@@ -1,0 +1,9 @@
+.env
+data/
+docs/BRIEF.md
+docs/dev.md
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store

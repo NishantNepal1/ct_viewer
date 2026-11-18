@@ -1,0 +1,11 @@
+# Runtime
+fastapi==0.163.1
+uvicorn==0.54.0
+httpx==0.28.1
+pydicom==3.0.2
+nibabel==5.5.0
+numpy==2.5.5
+python-dotenv==1.2.4
+# Tests
+pytest==9.2.0
+pytest-asyncio==1.5.0
